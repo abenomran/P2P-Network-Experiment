@@ -67,6 +67,38 @@ Number of completed queries per simulation time window
 Throughput = CompletedQueries / TimeWindow
 ```
 
+## Configuration
+Running the simulator depends on two configuration files. These two config files are stored in the directory `/peersim_config` and are `p2p-search-rw.txt` and `p2p-search-flood.txt` (corresponding to the search algorithms). 
+
+The relevant portions of these config files to the user running the simulator are labeled as `EXPERIMENT PARAMS`:
+```
+# EXPERIMENT PARAMS
+control.debug.filesPerPeer 10
+control.qd.numQueries = 10
+control.qd.ttl = 3
+control.qd.origin = 0
+control.qd.gap = 1
+control.qd.startQid = 1
+# network size
+SIZE 5
+```
+These are the variables that may be adjusted per experiment. 
+
+Importantly, there are also the stats protocol and tag.
+
+```
+################ stats =====================
+stats.protocol flood
+stats.tag baseline
+```
+
+These are used in saving simulation file data. After performing a simulation run, the data will be stored in two CSV files in directory `/run_outputs` (one corresponding to individual query data and another corresponding to a summary of the entire simulation run). The files will be stored in the sub-directories `/query` and `/summary`.
+
+The config file labels are important because the files actually stored in these sub-directories will be stored under format `{protocol}_{tag}_{current_time}_summary.csv` and `{protocol}_{tag}_{current_time}_query.csv`. For example, the test run below was saved as summary `flood_baseline_1771039222027_summary.csv`. This is important for running the analysis jupyter notebook, in which you will input your “tag” to pull your test queries. 
+
+For a given experiment run in which you want to make comparisons across the two algorithms, the same tag should be provided in both algorithm config files in order to make a comparison between the two.
+
+
 ## Running the Simulation
 1. Compile:
 ```
@@ -85,6 +117,20 @@ java -cp ".:peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" peersim.Simulator pe
 ```
 
 On a Windows system, substitute `:` with `;` in the classpath string.
+
+## Analysis
+Once a number of runs have been made under a certain tag, the Jupyter notebook `plot_p2p_results.ipynb` allows for plotting the data collected. Simply adjust the tag cell and run the rest. 
+
+## Experiment Outline
+This project makes use of PeerSim to create a toy P2P network with files installed at each peer. Queries are made between peers to search for keywords, hence simulating a peer to peer system. 
+
+The two algorithms were run as experiments on three separate workloads:
+1. Varying the number of files per peer (e.g. 5, 10, 20 files/peer)
+2. Varying the number of queries (e.g. 10, 20, 40 queries)
+3. Varying the number of peers (e.g. 5, 10, 20 peers)
+
+Performance was analyzed using latecy and throughput.
+
 
 ## Expected Behavior
 ### Random Walk Search

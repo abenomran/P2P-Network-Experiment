@@ -26,3 +26,6 @@ target/
 *.ipr
 *.iws
 .vscode/
+
+# outputs
+/run_outputs

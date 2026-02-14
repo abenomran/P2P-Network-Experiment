@@ -76,12 +76,12 @@ javac -cp "peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" -d . src/p2p_project/
 
 - **Random Walk** Search
 ```
-java -cp ".:peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" peersim.Simulator example/p2p-search-rw.txt 
+java -cp ".:peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" peersim.Simulator peersim_config/p2p-search-rw.txt 
 ```
 
 - **Flood** Search
 ```
-java -cp ".:peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" peersim.Simulator example/p2p-search-flood.txt
+java -cp ".:peersim-1.0.5.jar:djep-1.0.0.jar:jep-2.3.0.jar" peersim.Simulator peersim_config/p2p-search-flood.txt
 ```
 
 On a Windows system, substitute `:` with `;` in the classpath string.

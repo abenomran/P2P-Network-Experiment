@@ -30,16 +30,19 @@ public class DebugController implements Control {
     private final int linkPid;
 
     // this is a ratio of how many files are assigned to a peer based on their given category
-    // example: MUSIC peer -> 8 music files + 2 random-category files.
+    // it's set to 80%
+    // example: MUSIC peer with 10 files -> 8 music files + 2 random-category files.
     // this avoids strict category isolation and better simulates realistic peer storage
-    private final int filesPerPeer = 10;
-    private final int inCategory = 8;
+    private final int filesPerPeer;
+    private final int inCategory;
 
     // reads protocol id from PeerSim config file
     // in this project's case it would be either Random Walk or Flood
     public DebugController(String prefix) {
         this.pid = Configuration.getPid(prefix + "." + PAR_PID);
         this.linkPid = Configuration.getPid(prefix + ".linkable");
+        this.filesPerPeer = Configuration.getInt(prefix + ".filesPerPeer", 10);
+        this.inCategory = (int) (this.filesPerPeer * 0.8);
     }
 
     // initialize peers and print debug information
